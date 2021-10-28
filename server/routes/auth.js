@@ -9,24 +9,20 @@ authRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    await bcrypt.hash(password, saltRounds, async function (err, hash) {
-      const user = await createUser({ username, password: hash });
+    const hash = await bcrypt.hash(password, saltRounds);
+    const user = await createUser({ username, password: hash });
 
-      delete user.password;
+    delete user.password;
 
-      const token = jwt.sign(user, process.env["JWT_SECRET"], {
-        expiresIn: "1hr",
-      });
+    const token = jwt.sign(user, process.env["JWT_SECRET"]);
 
-      res.cookie("token", token, {
-        sameSite: "strict",
-        httpOnly: true,
-        signed: true,
-      });
-
-      console.log(res.header());
-      res.send(user);
+    res.cookie("token", token, {
+      sameSite: "strict",
+      httpOnly: true,
+      signed: true,
     });
+
+    res.send(user);
   } catch (error) {
     next(error);
   }

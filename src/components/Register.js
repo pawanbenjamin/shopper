@@ -6,7 +6,11 @@ function Register(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const respone = await fetch("http://localhost:5000/auth/register", {
+    console.log({
+      username,
+      password,
+    });
+    const respone = await fetch("/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

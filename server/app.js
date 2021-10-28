@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
 require("dotenv").config();
@@ -22,7 +23,7 @@ app.use(cookieParser(process.env["COOKIE_SECRET"]));
 app.use(express.static(path.join(__dirname, "public")));
 
 const authRequired = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.signedCookies.token;
   try {
     jwt.verify(token, process.env["JWT_SECRET"]);
   } catch (error) {
