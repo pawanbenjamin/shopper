@@ -1,10 +1,10 @@
-const client = require("./client");
+const pool = require("./pool");
 
 async function createOrderByUserId(userId) {
   try {
     const {
       rows: [order],
-    } = await client.query(
+    } = await pool.query(
       `
             INSERT INTO orders("userId")
                 VALUES($1)
@@ -20,7 +20,7 @@ async function createOrderByUserId(userId) {
 
 async function getAllOrders() {
   try {
-    const { rows } = await client.query(`
+    const { rows } = await pool.query(`
       SELECT * FROM orders
     `);
     return rows;
@@ -33,7 +33,7 @@ async function getOrderById(orderId) {
   try {
     const {
       rows: [order],
-    } = await client.query(
+    } = await pool.query(
       `
     SELECT *
           FROM orders 
@@ -55,7 +55,7 @@ async function getAllOrdersByUserId(userId) {
   try {
     const {
       rows: [orders],
-    } = await client.query(
+    } = await pool.query(
       `
         SELECT * FROM orders 
         INNER JOIN orders_products as op
@@ -77,7 +77,7 @@ async function getCart(userId) {
   try {
     const {
       rows: [cart],
-    } = await client.query(
+    } = await pool.query(
       `
       SELECT *
           FROM orders 
@@ -99,7 +99,7 @@ async function purchaseCart(orderId) {
   try {
     const {
       rows: [order],
-    } = await client.query(
+    } = await pool.query(
       `
       UPDATE orders
         SET isActive=true
@@ -114,7 +114,7 @@ async function purchaseCart(orderId) {
 
 async function deleteOrderById(orderId) {
   try {
-    const deletedOrder = await client.query(
+    const deletedOrder = await pool.query(
       `
       DELETE FROM orders
         WHERE id=$1

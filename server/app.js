@@ -7,13 +7,13 @@ const cors = require("cors");
 require("dotenv").config();
 
 const volleyball = require("volleyball");
-const client = require("./db/client");
+const pool = require("./db/pool");
 
 const PORT = 5000;
 
 const app = express();
 
-client.connect();
+pool.connect();
 
 app.use(cors());
 app.use(volleyball);

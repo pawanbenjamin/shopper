@@ -1,10 +1,10 @@
-const client = require("./client");
+const pool = require("./pool");
 
 async function createUser({ username, password }) {
   try {
     const {
       rows: [user],
-    } = await client.query(
+    } = await pool.query(
       `INSERT INTO users(username, password)
             VALUES($1, $2)
             ON CONFLICT (username) DO NOTHING
@@ -22,7 +22,7 @@ async function getUser(userId) {
   try {
     const {
       rows: [user],
-    } = await client.query(
+    } = await pool.query(
       `
       SELECT * FROM users
         WHERE id=$1
@@ -39,7 +39,7 @@ async function loginUser(username) {
   try {
     const {
       rows: [user],
-    } = await client.query(
+    } = await pool.query(
       `
       SELECT * FROM users
         WHERE username=$1
@@ -56,7 +56,7 @@ async function updateUser({ id, username, password }) {
   try {
     const {
       rows: [user],
-    } = await client.query(
+    } = await pool.query(
       `
       UPDATE users
         SET username=$2, password=$3
@@ -76,7 +76,7 @@ async function deleteUser(userId) {
   try {
     const {
       rows: [user],
-    } = await client.query(
+    } = await pool.query(
       `
       DELETE from users
         WHERE id=$1
