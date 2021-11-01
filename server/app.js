@@ -38,6 +38,6 @@ const authRequired = (req, res, next) => {
 
 app.use("/auth", require("./routes/auth"));
 
-app.use("/api", authRequired, require("./routes"));
+app.use("/api", /*authRequired,*/ require("./routes"));
 
 module.exports = app;

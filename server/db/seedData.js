@@ -140,12 +140,22 @@ async function seedDb() {
   }
 }
 
-buildTables()
-  .then(async () => {
-    console.log("db built!");
-    console.log("Seeding DB....");
-    await seedDb();
-    console.log("DB Seeded!");
-  })
-  .catch(console.error)
-  .finally(() => client.end());
+async function initDb() {
+  buildTables()
+    .then(async () => {
+      console.log("db built!");
+      console.log("Seeding DB....");
+      await seedDb();
+      console.log("DB Seeded!");
+    })
+    .catch(console.error)
+    .finally(() => client.end());
+}
+
+initDb();
+
+module.exports = {
+  initDb,
+  buildTables,
+  seedDb,
+};
