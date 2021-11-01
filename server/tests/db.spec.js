@@ -1,4 +1,4 @@
-// const { client } = require("../db/client");
+// const { pool } = require("../db/client");
 // const { buildTables, seedDB } = require("../db/seedData");
 
 // const {

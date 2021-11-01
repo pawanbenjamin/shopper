@@ -13,8 +13,6 @@ const PORT = 5000;
 
 const app = express();
 
-pool.connect();
-
 app.use(cors());
 app.use(volleyball);
 app.use(express.json());

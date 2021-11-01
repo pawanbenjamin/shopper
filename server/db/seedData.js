@@ -6,8 +6,6 @@ const { addToCart } = require("./orders_products");
 
 async function buildTables() {
   try {
-    const client = pool.connect();
-
     await pool.query(`
         DROP TABLE IF EXISTS orders_products;
         DROP TABLE IF EXISTS products;
@@ -52,8 +50,6 @@ async function buildTables() {
         "orderId" INTEGER REFERENCES orders(id),
         qty INTEGER
       );`);
-
-    (await client).release();
   } catch (error) {
     throw error;
   }
