@@ -1,7 +1,21 @@
-const product = (a, b) => {
-  return a * b;
-};
+// const { pool } = require("../db/client");
+// const { buildTables, seedDB } = require("../db/seedData");
 
-test(`Multiplies 1 * 2 and equals 2`, () => {
-  expect(product(1, 2)).toBe(2);
-});
+// const {
+//   getAllProducts,
+//   createProduct,
+//   getProductById,
+//   updateProduct,
+//   deleteProduct,
+// } = require("../db");
+
+// describe("DATABASE", () => {
+//   describe("PRODUCTS", () => {
+//     describe("getAllProducts()", async () => {
+//       const products = await getAllProducts();
+//       it("Gets all Products", async () => {
+//         expect(products.length).toBe(4);
+//       });
+//     });
+//   });
+// });

@@ -1,4 +1,4 @@
-const client = require("./client");
+const pool = require("./pool");
 
 const { createUser, createProduct } = require("./index");
 const { createOrderByUserId } = require("./orders");
@@ -6,9 +6,7 @@ const { addToCart } = require("./orders_products");
 
 async function buildTables() {
   try {
-    client.connect();
-
-    await client.query(`
+    await pool.query(`
         DROP TABLE IF EXISTS orders_products;
         DROP TABLE IF EXISTS products;
         DROP TABLE IF EXISTS orders;
@@ -17,7 +15,7 @@ async function buildTables() {
 
     console.log("Creating Users Table...");
 
-    await client.query(`
+    await pool.query(`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
@@ -26,7 +24,7 @@ async function buildTables() {
 
     console.log("Creating Orders Table...");
 
-    await client.query(`
+    await pool.query(`
       CREATE TABLE orders(
         id SERIAL PRIMARY KEY,
         "userId" INTEGER REFERENCES users(id),
@@ -36,7 +34,7 @@ async function buildTables() {
 
     console.log("Creating Products...");
 
-    await client.query(`
+    await pool.query(`
         CREATE TABLE products(
           id SERIAL PRIMARY KEY,
           name VARCHAR(255) UNIQUE NOT NULL,
@@ -46,7 +44,7 @@ async function buildTables() {
         );
       `);
 
-    await client.query(`
+    await pool.query(`
       CREATE TABLE orders_products(
         "productId" INTEGER REFERENCES products(id),
         "orderId" INTEGER REFERENCES orders(id),
@@ -140,12 +138,22 @@ async function seedDb() {
   }
 }
 
-buildTables()
-  .then(async () => {
+async function initDb() {
+  try {
+    await buildTables();
     console.log("db built!");
     console.log("Seeding DB....");
     await seedDb();
-    console.log("DB Seeded!");
-  })
-  .catch(console.error)
-  .finally(() => client.end());
+  } catch (error) {
+    console.error(error);
+  }
+  pool.end();
+}
+
+initDb();
+
+module.exports = {
+  initDb,
+  buildTables,
+  seedDb,
+};

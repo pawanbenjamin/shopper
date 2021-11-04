@@ -1,10 +1,10 @@
-const client = require("./client");
+const pool = require("./pool");
 
 async function addToCart({ productId, orderId, qty }) {
   try {
     const {
       rows: [order_product],
-    } = await client.query(
+    } = await pool.query(
       `
       INSERT INTO orders_products("orderId", "productId", qty)
            VALUES($1, $2, $3)
@@ -22,7 +22,7 @@ async function removeFromCart({ productId, orderId }) {
   try {
     const {
       rows: [order_product],
-    } = await client.query(
+    } = await pool.query(
       `
       DELETE FROM orders_products as op
           WHERE op."productId"=$1 and op."orderId"=$2
@@ -41,7 +41,7 @@ async function updateQtyInCart({ productId, orderId, qty }) {
   try {
     const {
       rows: [order_product],
-    } = await client.query(
+    } = await pool.query(
       `
       UPDATE orders_products as op
         SET qty=$3

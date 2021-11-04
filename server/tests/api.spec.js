@@ -1,7 +1,12 @@
-const sum = (a, b) => {
-  return a + b;
-};
+const app = require("../app");
+const request = require("supertest");
 
-test(`Adds 1 + 2 and equals 3`, () => {
-  expect(sum(1, 2)).toBe(3);
+describe("Products API", () => {
+  describe("GET /api/products", () => {
+    it("Get the correct products", async () => {
+      const { body } = await request(app).get("/api/products").expect(200);
+      console.log(body);
+      expect(body.length).toEqual(4);
+    });
+  });
 });
