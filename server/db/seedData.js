@@ -139,16 +139,6 @@ async function seedDb() {
 }
 
 async function initDb() {
-  // buildTables()
-  //   .then(async () => {
-  //     console.log("db built!");
-  //     console.log("Seeding DB....");
-  //     await seedDb();
-  //     console.log("DB Seeded!");
-  //   })
-  //   .catch(console.error)
-  //   .finally(() => pool.end());
-
   try {
     await buildTables();
     console.log("db built!");
