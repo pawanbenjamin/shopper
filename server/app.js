@@ -7,6 +7,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const volleyball = require("volleyball");
+const { dirname } = require("path");
 
 const app = express();
 
@@ -16,6 +17,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env["COOKIE_SECRET"]));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(--dirname, "client", "build")));
+app.get(
+  "*",
+  express.static(path.join(--dirname, "cleint", "build", "index.html"))
+);
 
 const authRequired = (req, res, next) => {
   const token = req.signedCookies.token;
