@@ -9,6 +9,7 @@ const {
 } = require("../db");
 
 // Get User
+//localhost:500/api/users/:id
 usersRouter.get(`/:id`, async (req, res, next) => {
   try {
     const user = await getUser(req.params.id);
@@ -19,6 +20,7 @@ usersRouter.get(`/:id`, async (req, res, next) => {
 });
 
 // Create User
+///api/users/
 usersRouter.post("/", async (req, res, next) => {
   try {
     const user = await createUser(req.body);
@@ -29,7 +31,7 @@ usersRouter.post("/", async (req, res, next) => {
 });
 
 // Update User
-usersRouter.put("/:id", async (req, res, next) => {
+usersRouter.patch("/:id", async (req, res, next) => {
   try {
     const user = await updateUser(req.body);
     res.send(user);
